@@ -1,3 +1,4 @@
+# Lista completa de información sobre monedas
 lista_total_de_monedas = [
     "AED	UAE Dirham	United Arab Emirates", "AFN	Afghan Afghani	Afghanistan",
     "ALL	Albanian Lek	Albania", "AMD	Armenian Dram	Armenia",
@@ -87,13 +88,12 @@ lista_total_de_monedas = [
     "XPF	CFP Franc	Collectivités d'Outre-Mer", "YER	Yemeni Rial	Yemen",
     "ZAR	South African Rand	South Africa", "ZMW	Zambian Kwacha	Zambia",
     "ZWL	Zimbabwean Dollar	Zimbabwe"
-    # Agrega aquí las demás monedas que desees
 ]
 
-lista_de_monedas_volatiles = ["ARS", "LYD", "SSP", "SYP", "VES"
-                              "YER", "ZWL"]
+# Lista de monedas que se consideran volátiles
+lista_de_monedas_volatiles = ["ARS", "LYD", "SSP", "SYP", "VES", "YER", "ZWL"]
 
-# Procesamos la lista
+# Procesamos la lista total de monedas para obtener solo los códigos de moneda
 lista_procesada_de_monedas = [
     linea.split("\t")[0] for linea in lista_total_de_monedas
 ]

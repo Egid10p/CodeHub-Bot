@@ -218,7 +218,7 @@ async def cerrar(ctx):
 @bot.command()
 async def help_config_perfil(ctx):
     if ctx.channel.name.startswith('config_perfil'):        
-        await ctx.send(f"Hola {ctx.author.name} Estoy aqui para ayudarte\nPuedes asignarte roles de dev dependiendo de que tecnologia sepas. Ejemplo si sabes python usa `$python` y se te asignara el rol de python-dev\nCon `$quitar_<Tecnologia>` te puedes quitar un rol de dev si por accidente te lo asignaste. Ejemplo: `$quitar_python`\n`lista_role`Te muestro una lista de todos los roles que te puedes agregar\n`$cerrar` puedes cerrar el canal de configuración de perfil, cuando vuelvas a necesitar configurar tu perfil solo vuelve a ejecuta `$config_perfil`")
+        await ctx.send(f"Hola {ctx.author.name} Estoy aqui para ayudarte\nPuedes asignarte roles de dev dependiendo de que tecnologia sepas. Ejemplo si sabes python usa `$python` y se te asignara el rol de python-dev\nCon `$quitar_<Tecnologia>` te puedes quitar un rol de dev si por accidente te lo asignaste. Ejemplo: `$quitar_python`\n`$lista_roles`Te muestro una lista de todos los roles que te puedes agregar\n`$cerrar` puedes cerrar el canal de configuración de perfil, cuando vuelvas a necesitar configurar tu perfil solo vuelve a ejecuta `$config_perfil`")
         
     else:
         await ctx.send("Este comando solo funciona en el canal de configuración de perfil")
@@ -241,7 +241,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f'Comando no encontrado. ¡Escribe `$help` para ver la lista de comandos!')
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(f'Falta argumento requerido. Asegúrate de proporcionar todos los argumentos necesarios. ¡Escribe `$help {ctx.command}` para obtener ayuda!')
+        await ctx.send(f'Falta argumento requerido. Asegúrate de proporcionar todos los argumentos necesarios. ¡Escribe `$help_me {ctx.command}` para obtener ayuda!')
     else:
         # Manejar otros errores según sea necesario
         await ctx.send(f'Se ha producido un error: {error}')

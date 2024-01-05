@@ -24,7 +24,7 @@ jokes = pyjokes.get_jokes(language="es", category="all")
 # Esta función nos permite saber que el bot ya se esta ejecutando
 @bot.event 
 async def on_ready():
-    print("El bot se esta ejecutando correctamente")
+    print("El bot se esta ejecutando correctamente :)")
 
 # Esta es una función para cambiar monedas a otras si es que el usuario escribe $cambio cantidad moneda de origen y de destinos
 @bot.command()
@@ -117,7 +117,10 @@ async def java(ctx):
 @bot.command()
 async def kotlin(ctx):
     await assign_roles(ctx, ['Kotlin-Dev'])
-    
+
+@bot.command()
+async def go(ctx):
+    await assign_roles(ctx, ['Go-Dev'])
 
 
 
@@ -182,6 +185,10 @@ async def quitar_java(ctx):
 @bot.command()
 async def quitar_kotlin(ctx):
     await remove_role(ctx, 'Kotlin-Dev')
+    
+@bot.command()
+async def quitar_go(ctx):
+    await remove_role(ctx, 'Go-Dev')
 
 
 
@@ -204,7 +211,7 @@ async def remove_role(ctx, role_name):
 @bot.command()
 async def lista_roles(ctx):
     await ctx.send(
-        "Esta es una lista de todos los roles de dev que puedes asignarte:\nPython-Dev Comando = `$python`\nJavaScript-Dev Comando = `$javascript`\nHTML-Dev Comando = `$html`\nCSS-Dev Comando = `$css`\nPHP-Dev Comando = `$php`\nC/C++Dev Comando = `$c`\nC#-Dev Comando = `$c_sharp`\nSQl-Dev Comando = `$sql`\nJava-Dev Comando = `$java`\nKotlin-Dev Comando = `$kotlin`\nNota: SQL-Dev incluye bases de datos en general, no solo SQLs. \nTambien que si te quieres quitar alguno de estos roles solo tienes que poner $quitar_<Nombre del comando para agregar>. Ekemplo: `$quitar_c_sharp`"
+        "Esta es una lista de todos los roles de dev que puedes asignarte:\nPython-Dev Comando = `$python`\nJavaScript-Dev Comando = `$javascript`\nHTML-Dev Comando = `$html`\nCSS-Dev Comando = `$css`\nPHP-Dev Comando = `$php`\nC/C++Dev Comando = `$c`\nC#-Dev Comando = `$c_sharp`\nSQl-Dev Comando = `$sql`\nJava-Dev Comando = `$java`\nKotlin-Dev Comando = `$kotlin`\nGo-Dev Comando = `$go`\nNota: SQL-Dev incluye bases de datos en general, no solo SQLs.\nTambien que si te quieres quitar alguno de estos roles solo tienes que poner $quitar_<Nombre del comando para agregar>. Ejemplo: `$quitar_c_sharp`"
                    )
 # Definimos esta comando para cuando el usuario quiera cerrar su perfil
 @bot.command()
@@ -239,7 +246,7 @@ async def help_me(ctx):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send(f'Comando no encontrado. ¡Escribe `$help` para ver la lista de comandos!')
+        await ctx.send(f'Comando no encontrado. ¡Escribe `$help_me` para ver la lista de comandos!')
     elif isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f'Falta argumento requerido. Asegúrate de proporcionar todos los argumentos necesarios. ¡Escribe `$help_me {ctx.command}` para obtener ayuda!')
     else:

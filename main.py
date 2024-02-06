@@ -1,6 +1,6 @@
 # Importando los modulos necesarios
 import modulos.conversor as conversor
-import modulos.añadir_datos_proyectos as añadir_proyectos
+import modulos.add_datos_proyectos as añadir_proyectos
 import modulos.actualizar_datos_proyectos as actualizar_proyectos
 import discord
 from discord.ext import commands

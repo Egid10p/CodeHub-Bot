@@ -10,8 +10,8 @@ api_key = data['api_key']
 # Definir una función para realizar conversiones de moneda
 def funcion_de_conversor(cantidad, moneda_origen, moneda_destino):
   import requests
-  from lista import lista_procesada_de_monedas
-  from lista import lista_de_monedas_volatiles
+  from modulos.lista import lista_procesada_de_monedas
+  from modulos.lista import lista_de_monedas_volatiles
 
   ejecutar = True
   volatil = False

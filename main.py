@@ -1,5 +1,7 @@
 # Importando los modulos necesarios
-import conversor
+import modulos.conversor as conversor
+import modulos.añadir_datos_proyectos as añadir_proyectos
+import modulos.actualizar_datos_proyectos as actualizar_proyectos
 import discord
 from discord.ext import commands
 import pyjokes
@@ -27,7 +29,7 @@ async def on_ready():
     print("El bot se esta ejecutando correctamente :)")
 
 # Esta es una función para cambiar monedas a otras si es que el usuario escribe $cambio cantidad moneda de origen y de destinos
-@bot.command()
+@bot.command(aliases=["conversor", "cm"])
 async def cambio(ctx, cantidad: int, moneda_origen: str, moneda_destino: str):
     ejecutar, volatil, resultado = conversor.funcion_de_conversor(cantidad, moneda_origen, moneda_destino)
     if ejecutar:
@@ -40,18 +42,18 @@ async def cambio(ctx, cantidad: int, moneda_origen: str, moneda_destino: str):
         
     
 # Definiendo el comando chiste
-@bot.command()
+@bot.command(aliases=["broma"])
 async def chiste(ctx):
     joke = random.choice(jokes)
     await ctx.send(joke)
     
 # Definiendo el comando repo
-@bot.command()
+@bot.command(aliases=["repositorio", "github"])
 async def repo(ctx):
     await ctx.send("https://github.com/Egid10p/CodeHub-Bot")
     
 # Definiendo el comando config perfil
-@bot.command()
+@bot.command(aliases=["config_profile"])
 async def config_perfil(ctx):
     #Obtenemos info del server
     server = ctx.guild
@@ -102,7 +104,7 @@ async def php(ctx):
 async def c(ctx):
     await assign_roles(ctx, ['C/C++Dev'])
     
-@bot.command()
+@bot.command(aliases=['c#'])
 async def c_sharp(ctx):
     await assign_roles(ctx, ['C#-Dev'])
     
@@ -214,7 +216,7 @@ async def lista_roles(ctx):
         "Esta es una lista de todos los roles de dev que puedes asignarte:\nPython-Dev Comando = `$python`\nJavaScript-Dev Comando = `$javascript`\nHTML-Dev Comando = `$html`\nCSS-Dev Comando = `$css`\nPHP-Dev Comando = `$php`\nC/C++Dev Comando = `$c`\nC#-Dev Comando = `$c_sharp`\nSQl-Dev Comando = `$sql`\nJava-Dev Comando = `$java`\nKotlin-Dev Comando = `$kotlin`\nGo-Dev Comando = `$go`\nNota: SQL-Dev incluye bases de datos en general, no solo SQLs.\nTambien que si te quieres quitar alguno de estos roles solo tienes que poner $quitar_<Nombre del comando para agregar>. Ejemplo: `$quitar_c_sharp`"
                    )
 # Definimos esta comando para cuando el usuario quiera cerrar su perfil
-@bot.command()
+@bot.command(aliases=['close'])
 async def cerrar(ctx):
     if ctx.channel.name.startswith('config_perfil_'):
         await ctx.channel.delete()
@@ -222,24 +224,86 @@ async def cerrar(ctx):
         await ctx.send('Este comando solo puede ejecutarse en el canal de configuración de perfil.')
 
 # Definimos esta comando de ayuda para la configuración del perfil
-@bot.command()
+@bot.command(aliases=['help_config_profile'])
 async def help_config_perfil(ctx):
     if ctx.channel.name.startswith('config_perfil'):        
         await ctx.send(f"Hola {ctx.author.name} Estoy aqui para ayudarte\nPuedes asignarte roles de dev dependiendo de que tecnologia sepas. Ejemplo si sabes python usa `$python` y se te asignara el rol de python-dev\nCon `$quitar_<Tecnologia>` te puedes quitar un rol de dev si por accidente te lo asignaste. Ejemplo: `$quitar_python`\n`$lista_roles`Te muestro una lista de todos los roles que te puedes agregar\n`$cerrar` puedes cerrar el canal de configuración de perfil, cuando vuelvas a necesitar configurar tu perfil solo vuelve a ejecuta `$config_perfil`")
         
     else:
         await ctx.send("Este comando solo funciona en el canal de configuración de perfil")
+        
+        
+        
+# Comando para ver la información de los proyectos
+@bot.command(aliases=['proyecto'])
+async def proyectos(ctx):
+    # Ruta del archivo JSON que contiene la información de los proyectos
+    data_proyectos_json = "data_proyectos.json"
+
+    # Cargar el JSON
+    with open(data_proyectos_json, "r") as archivo:
+        data_proyectos = json.load(archivo)
+    
+    # Obtener la lista de proyectos del JSON
+    proyectos = data_proyectos["proyectos"]
+
+    # Mostrar información de cada proyecto en un mensaje
+    for proyecto in proyectos:
+        mensaje = f"**# Nombre** {proyecto['nombre']}\n**# Descripción** {proyecto['descripcion']}\n**# Estado** {proyecto['estado']}\n**# Repositorio** {proyecto['repositorio']}"
+        await ctx.send(mensaje)
+
+# Comando para añadir un nuevo proyecto
+@bot.command()
+async def añadir_proyecto(ctx, nombre: str, descripcion: str, repositorio: str, estado: str):
+    # Verificar si el autor tiene el rol de Administrador o Moderador
+    if discord.utils.get(ctx.author.roles, name="Administrador") or discord.utils.get(ctx.author.roles, name="Moderador"):
+        # Llamar a la función para añadir el proyecto
+        resultado = añadir_proyectos.añadir_proyecto(nombre, descripcion, repositorio, estado)
+        
+        # Enviar mensaje de confirmación o error
+        if resultado:
+            await ctx.send("El proyecto fue agregado correctamente")
+        else:
+            await ctx.send("Hubo un error, el proyecto no pudo ser agregado")
+    else:
+        await ctx.send(f"No tienes el rol necesario para ejecutar este comando.")
+
+# Comando para actualizar información de un proyecto existente
+@bot.command()
+async def actualizar_proyecto(ctx, id_proyecto: int, nombre: str, descripcion: str, repositorio: str, estado: str):
+    # Verificar si el autor tiene el rol de Administrador o Moderador
+    if discord.utils.get(ctx.author.roles, name="Administrador") or discord.utils.get(ctx.author.roles, name="Moderador"):
+        id_proyecto = int(id_proyecto)
+
+        # Verificar que el número de proyecto sea válido
+        if id_proyecto >= 1:
+            # Llamar a la función para actualizar el proyecto
+            resultado = actualizar_proyectos.actualizar(id_proyecto, nombre, descripcion, repositorio, estado)
+            
+            # Enviar mensaje de confirmación o error
+            if resultado:
+                await ctx.send("El proyecto se ha actualizado con éxito")
+            else:
+                await ctx.send("El número de proyecto no debe ser mayor al número de proyectos")
+        else:
+            await ctx.send("El número de proyecto no debe ser menor a 1")
+    else:
+        await ctx.send(f"No tienes el rol necesario para ejecutar este comando.")
 
 # Definimos un comando de ayuda general
 @bot.command()
 async def help_me(ctx):
     mensaje = ('''Los comandos disponibles son: 
-        \n`$chiste` Te cuento un chiste de programación 
-        \n`$repo` Te muestro el repositorio 
-        \n`$cambio` Puedo converitr una cantidad de una moneda a otra. Ejemplo: `$cambio 100 USD EUR`
-        \n`config_perfil` Este comando crea un canal privado donde podras asignarte roles de dev dependiendo de que tecnologias sepas
-        \n`help_config_perfil` Te muestra un mensaje de ayuda para configurar tu perfil
-        \n`$help_me` Te muestro este mensaje''')
+        \n`$chiste` Te cuento un chiste de programación.
+        \n`$repo` Te muestro el repositorio.
+        \n`$cambio` Puedo converitr una cantidad de una moneda a otra. Ejemplo: `$cambio 100 USD EUR`.
+        \n`$config_perfil` Este comando crea un canal privado donde podras asignarte roles de dev dependiendo de que tecnologias sepas.
+        \n`$help_config_perfil` Te muestra un mensaje de ayuda para configurar tu perfil.
+        \n`$help_me` Te muestro este mensaje.
+        \n Comando de admin y moderadores.
+        \n`"$proyectos` Para mostrar los proyectos del servidor.
+        \n`$añadir_proyecto` Para añadir un proyecto a esa lista de proyectos del servidor. Ejemplo `$añadir_proyecto [Nombre del proyecto] [Descripcion] [Repositorio] [Estado]`.
+        \n`$actualizar_proyecto` Para actualizar los datos de ese proyecto. Ejemplo `$añadir_proyecto [Numero del proyecto en la lista] [Nombre del proyecto] [Descripcion] [Repositorio] [Estado]''')
     await ctx.send(mensaje)
     
 # Hacemos un sistema de control de errores    

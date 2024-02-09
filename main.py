@@ -17,7 +17,7 @@ import json
 with open('config.json') as f:
     data = json.load(f)
 
-token = data['token2']
+token = data['token']
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -64,7 +64,7 @@ async def send_after_time(shipping_time):
 
     # Get the channel by its ID
     # Obtener el canal por su ID
-    channel_id = 1186253620900007956
+    channel_id = 1173004676258603021
     channel = bot.get_channel(channel_id)
 
     # Send the message

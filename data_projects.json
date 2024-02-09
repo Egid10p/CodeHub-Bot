@@ -1,0 +1,16 @@
+{
+    "projects": [
+        {
+            "name": "CodeHub Bot",
+            "description": "Este es el bot de la comunidad de CodeHub. Este bot esta creado con el proposito de ayudar a la comunidad, no olvides dejar funciones que te gustaria que tenga en los issues del repositorio en github",
+            "state": "En progreso",
+            "repository": "https://github.com/Egid10p/CodeHub-Bot"
+        },
+        {
+            "name": "Galeria",
+            "description": "Este es un proyecto web en el cual haremos una galeria con fotos de APIs y fotos subidas por nosotros, este es un proyecto simple para hacerlo en conjunto",
+            "state": "En progreso",
+            "repository": "No existente"
+        }
+    ]
+}

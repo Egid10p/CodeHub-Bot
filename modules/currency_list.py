@@ -1,5 +1,6 @@
+# Complete list of currency information
 # Lista completa de información sobre monedas
-lista_total_de_monedas = [
+total_currency_list = [
     "AED	UAE Dirham	United Arab Emirates", "AFN	Afghan Afghani	Afghanistan",
     "ALL	Albanian Lek	Albania", "AMD	Armenian Dram	Armenia",
     "ANG	Netherlands Antillian Guilder	Netherlands Antilles",
@@ -90,10 +91,12 @@ lista_total_de_monedas = [
     "ZWL	Zimbabwean Dollar	Zimbabwe"
 ]
 
+# List of currencies considered volatile
 # Lista de monedas que se consideran volátiles
-lista_de_monedas_volatiles = ["ARS", "LYD", "SSP", "SYP", "VES", "YER", "ZWL"]
+volatile_currency_list = ["ARS", "LYD", "SSP", "SYP", "VES", "YER", "ZWL"]
 
+# Process the total currency list to obtain only the currency codes
 # Procesamos la lista total de monedas para obtener solo los códigos de moneda
-lista_procesada_de_monedas = [
-    linea.split("\t")[0] for linea in lista_total_de_monedas
+processed_currency_list = [
+    line.split("\t")[0] for line in total_currency_list
 ]

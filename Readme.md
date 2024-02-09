@@ -16,4 +16,4 @@ Este bot esta hecho con python 3.11 y la libreria discord.py
 
 ---
 
-![Imagen2](imggenes/imagen2.png)
+![Imagen2](img/imagen2.png)

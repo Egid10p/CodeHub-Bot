@@ -12,8 +12,8 @@ Este bot esta hecho con python 3.11 y la libreria discord.py
 
 ## Imagenes
 
-![Imagen1](Imagenes/imagen1.png)
+![Imagen1](img/imagen1.png)
 
 ---
 
-![Imagen2](Imagenes/imagen2.png)
+![Imagen2](imggenes/imagen2.png)

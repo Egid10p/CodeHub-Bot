@@ -10,6 +10,10 @@ Este bot esta hecho con python 3.11 y la libreria discord.py
 
 ---
 
+## Uso
+
+En el servidor de Discord ejecuta `$help_me` para mostrar todos los comandos, el prefijo de todos y cada uno sera siempre un `$`
+
 ## Imagenes
 
 ![Imagen1](img/imagen1.png)

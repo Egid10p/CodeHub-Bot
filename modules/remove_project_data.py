@@ -1,9 +1,10 @@
 import json
 
+
 def remove_project(project_id):
     # Load the JSON from the file or wherever you get it from
     # Cargar el JSON desde el archivo o de donde lo obtengas
-    with open('data_projects.json', 'r') as f:
+    with open("data_projects.json", "r") as f:
         data = json.load(f)
 
     # Check if the project number is valid
@@ -14,10 +15,9 @@ def remove_project(project_id):
 
         # Save changes back to file
         # Guardar los cambios de nuevo en el archivo
-        with open('data_projects.json', 'w') as f:
+        with open("data_projects.json", "w") as f:
             json.dump(data, f, indent=4)
 
-        return (f'Proyecto {project_id} borrado exitosamente:\n{delete_project}')
+        return f"Proyecto {project_id} borrado exitosamente:\n{delete_project}"
     else:
-        return ('Número de proyecto no válido.')
-
+        return "Número de proyecto no válido."

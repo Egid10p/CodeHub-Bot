@@ -1,18 +1,23 @@
 import json
 
+
 # Function to add a new project to the JSON file
 # Función para añadir un nuevo proyecto al archivo JSON
 def add_project_func(name: str, description: str, state: str, repository: str):
+
     # Verify that all values are non-empty strings
     # Verifica que todos los valores sean cadenas no vacías
-    if all(isinstance(value, str) and value.strip() != "" for value in [name, description, repository, state]):
+    if all(
+        isinstance(value, str) and value.strip() != ""
+        for value in [name, description, repository, state]
+    ):
         # Path to the JSON file containing project information
         # Ruta al archivo JSON que contiene la información de los proyectos
-        file_path = 'data_projects.json'
+        file_path = "data_projects.json"
 
         # 1. Read the current content of the JSON file
         # 1. Lee el contenido actual del archivo JSON
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             current_data = json.load(file)
 
         # 2. Modify the data as needed (add a new project)
@@ -21,7 +26,7 @@ def add_project_func(name: str, description: str, state: str, repository: str):
             "name": name,
             "description": description,
             "state": state,
-            "repository": repository
+            "repository": repository,
         }
 
         # Add the new project to the list of projects
@@ -30,7 +35,7 @@ def add_project_func(name: str, description: str, state: str, repository: str):
 
         # 3. Write the updated data to the same file
         # 3. Escribe los datos actualizados en el mismo archivo
-        with open(file_path, 'w') as file:
+        with open(file_path, "w") as file:
             json.dump(current_data, file, indent=4)
 
         # Indicate that the operation was successful
